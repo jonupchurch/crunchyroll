@@ -48,8 +48,9 @@
   up to season 2, would read as "no English" though the series has it. The
   episode's versions are used as evidence for true only; the series-level list
   decides otherwise. The watchlist page follows up with
-  `/cms/objects/{series ids}`, which is expected to carry `series_metadata`
-  (item not yet captured).
+  `/cms/objects/{series ids}`, which carries the same series object as
+  browse, `series_metadata.audio_locales` included (confirmed 2026-10-07,
+  Wise Man's Grandchild: ja-JP, es-419, pt-BR, en-US).
 - **Card markup**: the watchlist link is an empty `<a>` with class
   `watchlist-card__content-link--{hash}` laid over the card, so the poster is
   a sibling, not a child. Class suffixes are generated; only the

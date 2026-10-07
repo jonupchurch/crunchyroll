@@ -91,8 +91,8 @@ also exports via `module.exports` when that exists.
   link to `/watch/{episodeId}`; the poster is elsewhere in the card. Needs a
   whole card's HTML (watchlist and browse) before the DOM code is written.
 - **Watchlist data is confirmed**: episode panels carrying `series_id` and
-  per-episode `versions[]`. The `/cms/objects` follow-up is expected to carry
-  the series-level list but hasn't been captured.
+  per-episode `versions[]`, then a `/cms/objects` follow-up with the
+  series-level list. Nothing left to capture on the data side.
 - **Home and search shapes are unverified.** Assumed to match browse.
 - **Which poster corner** is picked once the card DOM is known.
 

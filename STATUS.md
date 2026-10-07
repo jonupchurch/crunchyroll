@@ -27,6 +27,8 @@
   (sample: Frieren, 13 locales incl. `en-US`). No per-series lookup needed
   there. `is_dubbed` is also present but isn't English-specific.
 - Items have `slug_title` and `id`, which is what a card's link is built from.
+- The watchlist page then calls `/cms/objects/{series ids}`, which returns
+  the same series objects as browse (`series_metadata.audio_locales`).
 - Watchlist items are `{ panel: <episode> }`: `panel.id` is the episode,
   `episode_metadata.series_id` the series, `episode_metadata.versions[]` that
   episode's audio tracks. Watchlist cards link to `/watch/{episodeId}/...`
@@ -42,8 +44,6 @@
 
 - Card DOM is only partly known: need a whole card's HTML (watchlist and
   browse) to find the poster and pick the corner.
-- `/cms/objects/{ids}` item shape uncaptured; expected to carry
-  `series_metadata` for watchlist series.
 - Home and search item shapes are unconfirmed. Film listings likely use
   `movie_listing_metadata`.
 - Whether anything besides the badge belongs in the initial feature set.
