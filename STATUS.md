@@ -9,11 +9,20 @@
   responses and logs them. No user-visible features.
 - ai-tools toolkit and Spec-Kit engine imported.
 
+## Confirmed on the live site (2026-10-07)
+
+- The site calls `/content/v2/` over XHR; the hook captures it.
+- Season objects (`/content/v2/cms/series/{id}/seasons`) list every audio
+  language in `versions[]` as `{ audio_locale, guid, original, variant }`.
+  `original: true` marks the source-language track.
+- A season's own `audio_locales` only holds the preferred language (the
+  response is tailored by `preferred_audio_language`), so don't use it.
+- `subtitle_locales` on the season is the complete list.
+
 ## Open decisions
 
-- Confirm on the live site that series objects in `/content/v2/` responses
-  carry `audio_locales` / `subtitle_locales`, and which endpoints feed which
-  card types (home, browse, search, watchlist).
+- What the card-grid endpoints (home, browse, search, watchlist) return per
+  item: is the full audio list there, or does each series need its own lookup?
 - Badge placement: overlay on the poster vs. text beside the title.
 - Whether to add a build step / test runner, or stay plain JS.
 
