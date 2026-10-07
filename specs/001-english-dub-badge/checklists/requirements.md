@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -32,4 +32,4 @@
 ## Notes
 
 - Items marked incomplete require spec updates before `/speckit-clarify` or `/speckit-plan`
-- Open: FR-009 badge placement (poster overlay vs. text beside the title).
+- FR-009 badge placement closed 2026-10-07: poster corner overlay.

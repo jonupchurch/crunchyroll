@@ -10,7 +10,7 @@
 - ai-tools toolkit and Spec-Kit engine imported.
 - Draft spec for the English dub badge at
   `specs/001-english-dub-badge/spec.md` (branch `001-english-dub-badge`).
-  One open item: badge placement (FR-009).
+  Passes its quality checklist; no open items.
 
 ## Confirmed on the live site (2026-10-07)
 
@@ -26,17 +26,16 @@
 
 - Badge only when a series has an English audio version (`en-US`). No badge
   otherwise, and no listing of other languages.
+- Badge is overlaid on a corner of the poster; which corner is a plan detail.
 
 ## Open decisions
 
 - What the card-grid endpoints (home, browse, search, watchlist) return per
   item: is the full audio list there, or does each series need its own lookup?
-- Badge placement: overlay on the poster vs. text beside the title. Blocks
-  the spec (FR-009).
 - Whether anything besides the badge belongs in the initial feature set.
 - Whether to add a build step / test runner, or stay plain JS.
 
 ## Next action
 
-Close badge placement, then `speckit-plan`. The plan needs the card-grid
+`speckit-plan`. It needs the card-grid
 endpoint answer above, which takes a console capture from the live site.

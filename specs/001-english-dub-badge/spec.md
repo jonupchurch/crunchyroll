@@ -8,6 +8,12 @@
 
 **Input**: User description: "English dub badge on series cards. On crunchyroll.com, wherever series cards appear (home, browse, search, watchlist), show a badge on a card only when that series has an English (en-US) audio version. No badge when it doesn't, and never list other audio languages. The badge must not break or noticeably slow the site, and must keep working as cards load in while scrolling or navigating. Badge placement (overlay on the poster vs. text beside the title) is not yet decided."
 
+## Clarifications
+
+### Session 2026-10-07
+
+- Q: Where should the badge sit on a series card? → A: Overlaid on a corner of the poster image.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - See at a glance which series have an English dub (Priority: P1)
@@ -95,7 +101,7 @@ reloading the tab.
 - **FR-006**: A card MUST never carry more than one badge.
 - **FR-007**: When the extension can't determine a series' audio languages, it MUST show no badge for that series.
 - **FR-008**: The extension MUST NOT change, block, or delay the site's own behaviour; if any part of the extension fails, the site MUST work exactly as it does without it.
-- **FR-009**: The badge MUST be placed [NEEDS CLARIFICATION: overlay on the poster image, or text beside the title?]
+- **FR-009**: The badge MUST be overlaid on a corner of the card's poster image, in the same corner on every card, and MUST NOT change the card's size or layout.
 - **FR-010**: The badge MUST be readable against any poster artwork or page background and MUST carry a text alternative saying an English dub is available.
 - **FR-011**: The badge MUST NOT cover the card's title or interfere with clicking or hovering the card.
 
@@ -123,6 +129,7 @@ reloading the tab.
 - "English" means the en-US audio locale only; other English variants, if they ever appear, are not counted.
 - A series counts as having English audio if any of its seasons does.
 - The series' own page (hero/detail view) is out of scope; it already shows audio options.
+- Which poster corner is a design detail for planning: whichever one doesn't collide with the site's own poster overlays.
 - The badge is a single fixed label; no settings, toggles, or other languages in this feature.
 - Filtering or sorting the catalog by dub availability is out of scope.
 - Target browser is Edge on desktop; other Chromium browsers are expected to work but aren't verified.
