@@ -95,7 +95,7 @@ MVP is Phases 1 to 3: badges on the browse page. Stop and validate there, then a
 - [x] T021 Add `hasDub` (`is_dubbed === true`) to `collectAudioInfo` series entries in `src/audio-index.js`, with tests in `tests/audio-index.test.js`
 - [x] T022 In `src/content.js`, keep `{ hasEnglish, hasDub }` per series and pick the badge kind (`en`, `no-en`, none); reconcile so a card's badge is swapped when its kind changes
 - [x] T023 Style `.cr-enhancer-dub-badge[data-kind='no-en']` red in `src/content.css`
-- [ ] T024 On the live site, check a `no-en` card against its series page (dubbed, no English) and an undubbed card (no tag)
+- [x] T024 On the live site, check a `no-en` card against its series page (dubbed, no English) and an undubbed card (no tag)
 
 ---
 
@@ -104,4 +104,4 @@ MVP is Phases 1 to 3: badges on the browse page. Stop and validate there, then a
 - [x] T025 In `src/content.js`, label known series with neither English nor any dub as `no-dub`
 - [x] T026 In `src/audio-index.js`, fall back to "more than one audio track" when `is_dubbed` isn't a boolean, so a missing flag can't produce a false `no-dub`; tests in `tests/audio-index.test.js`
 - [x] T027 Green background for `data-kind='en'` in `src/content.css` (`no-dub` keeps the default black)
-- [ ] T028 On the live site, check a `no-dub` card against its series page and confirm all three colours read clearly over artwork
+- [x] T028 On the live site, check a `no-dub` card against its series page and confirm all three colours read clearly over artwork

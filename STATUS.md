@@ -55,7 +55,7 @@
 - Browse (`/videos/popular`) badges seen working with the generic card rule
   (2026-10-07). The pill overlaps the site's orange top-right corner marker
   on some posters; move it or leave it?
-- Home and search unchecked. `no-en` / `no-dub` not yet seen on a real card.
+- Home and search unchecked.
 - Filter feature: specced at `specs/002-label-filter/spec.md` on branch
   `002-label-filter` (cut from the unmerged badge branch). Not planned or
   built. Known markup: the site's Filter control is
@@ -71,4 +71,5 @@
 
 Get the browse card's ancestor chain (which element is the grid cell), then
 `speckit-plan` for 002. Badge feature (001) still has open live checks:
-home, search, long scroll, a real `no-en` and `no-dub` card.
+home, search, long scroll. `no-en` and `no-dub` confirmed working by the
+user (2026-10-07).
