@@ -29,3 +29,12 @@
 .cr-enhancer-dub-badge[data-kind='no-en'] {
   background: #c8102e;
 }
+
+.cr-enhancer-dub-badge[data-size='compact'] {
+  top: 3px;
+  right: 3px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 9px;
+  letter-spacing: 0;
+}

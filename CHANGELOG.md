@@ -17,6 +17,7 @@ All notable changes to this project are documented here. Format follows
 - Red `no-en` tag on cards whose series is dubbed but not in English, and a
   black `no-dub` label on subtitled-only series. `EN DUB` is green.
 - Spec for filtering browse cards by label (`specs/002-label-filter/`).
+- Smaller badge on narrow posters so it doesn't swamp the thumbnail.
 
 ### Changed
 

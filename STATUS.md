@@ -55,7 +55,8 @@
 - Browse (`/videos/popular`) badges seen working with the generic card rule
   (2026-10-07). The pill overlaps the site's orange top-right corner marker
   on some posters; move it or leave it?
-- Home and search unchecked.
+- Search seen working (2026-10-07). Home unchecked. A smaller badge for
+  narrow posters (search's series list) is written but not yet seen.
 - Filter feature: specced at `specs/002-label-filter/spec.md` on branch
   `002-label-filter` (cut from the unmerged badge branch). Not planned or
   built. Known markup: the site's Filter control is

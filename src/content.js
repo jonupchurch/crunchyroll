@@ -5,6 +5,8 @@
   const SOURCE = 'cr-enhancer';
   const BADGE_CLASS = 'cr-enhancer-dub-badge';
   const POSITIONED_CLASS = 'cr-enhancer-positioned';
+  // Posters narrower than this (search's series list) get a smaller badge.
+  const COMPACT_BELOW_PX = 140;
   const { collectAudioInfo, linkTargetFromHref } = globalThis.crEnhancer;
 
   const BADGES = {
@@ -75,6 +77,7 @@
     badge.setAttribute('aria-label', BADGES[kind].label);
     // Only give the host a positioning context if the site hasn't already.
     if (getComputedStyle(host).position === 'static') host.classList.add(POSITIONED_CLASS);
+    if (host.offsetWidth < COMPACT_BELOW_PX) badge.dataset.size = 'compact';
     host.append(badge);
   };
 
