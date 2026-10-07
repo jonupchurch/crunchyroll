@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** English dub badge written, not yet seen working on the live site (2026-10-07).
+**Phase:** English dub badge working on the watchlist; other pages unchecked (2026-10-07).
 
 ## What exists
 
@@ -17,7 +17,8 @@
 - `content.js` indexes captured responses and badges cards, re-checking on
   every DOM change; `content.css` styles the pill (top right of the image).
   Built against real watchlist markup; a generic rule covers other pages.
-  None of the DOM code has run in a browser yet.
+  Seen working on the watchlist (first screen, 2026-10-07). Browse, home,
+  search, long scrolling, and accuracy against series pages are unchecked.
 
 ## Confirmed on the live site (2026-10-07)
 
@@ -58,5 +59,6 @@
 
 ## Next action
 
-Reload the extension and walk `specs/001-english-dub-badge/quickstart.md`,
-watchlist first. Fix whatever doesn't badge (T010, T013, T014, T017, T020).
+Check one unbadged "Sub | Dub" watchlist card (Do It Yourself!!) against its
+series page, then browse, home, search, and a long scroll (T010, T013, T014,
+T017, T020).
