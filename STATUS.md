@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** English dub badge specced and planned; tasks next (2026-10-07).
+**Phase:** English dub badge in progress: data indexing done, DOM badging next (2026-10-07).
 
 ## What exists
 
@@ -11,7 +11,11 @@
 - Draft spec for the English dub badge at
   `specs/001-english-dub-badge/spec.md` (branch `001-english-dub-badge`).
   Passes its quality checklist; no open items.
-- Plan, research, data model, contracts, and quickstart alongside it.
+- Plan, research, data model, contracts, quickstart, and tasks alongside it.
+  T001-T006 done.
+- `src/audio-index.js` (pure logic, 16 unit tests via `npm test`) and an
+  in-memory series index in `content.js`. The index is untested on the live
+  site and nothing is drawn yet.
 
 ## Confirmed on the live site (2026-10-07)
 
@@ -54,4 +58,5 @@
 
 ## Next action
 
-`speckit-tasks`, then implement User Story 1 (browse) once the card HTML is in.
+T007: get a whole browse card's HTML (and a watchlist card's for T011), then
+write the badging in `content.js` / `content.css`.
