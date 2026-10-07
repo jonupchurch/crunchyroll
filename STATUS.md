@@ -21,6 +21,11 @@
 - A season's own `audio_locales` only holds the preferred language (the
   response is tailored by `preferred_audio_language`), so don't use it.
 - `subtitle_locales` on the season is the complete list.
+- Browse items (`/content/v2/discover/browse`, `data[]`) carry the complete
+  audio list in `series_metadata.audio_locales`, keyed by series `id`
+  (sample: Frieren, 13 locales incl. `en-US`). No per-series lookup needed
+  there. `is_dubbed` is also present but isn't English-specific.
+- Items have `slug_title` and `id`, which is what a card's link is built from.
 
 ## Requirements decided
 
@@ -30,8 +35,9 @@
 
 ## Open decisions
 
-- What the card-grid endpoints (home, browse, search, watchlist) return per
-  item: is the full audio list there, or does each series need its own lookup?
+- Home, search, and watchlist item shapes are unconfirmed; assumed to match
+  browse until a capture says otherwise. Film listings likely use
+  `movie_listing_metadata` instead of `series_metadata` (unconfirmed).
 - Whether anything besides the badge belongs in the initial feature set.
 - Whether to add a build step / test runner, or stay plain JS.
 
