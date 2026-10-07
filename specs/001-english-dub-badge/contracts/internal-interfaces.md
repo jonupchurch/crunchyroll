@@ -28,7 +28,8 @@ collectAudioInfo(body: unknown) -> {
   Walks body (depth-limited). `series` has one entry per catalog item found,
   plus a `hasEnglish: true, hasDub: false` entry for the series of any episode
   whose versions include en-US (an episode never yields `hasEnglish: false`).
-  `hasDub` is the item's `is_dubbed === true`.
+  `hasDub` is the item's `is_dubbed`, or "more than one audio track" when
+  that isn't a boolean.
   `episodes` maps each episode found to its series.
   Never throws. Returns empty arrays for anything that isn't an object or array.
 
@@ -43,7 +44,8 @@ Exposed as `globalThis.crEnhancer` in the browser and `module.exports` in Node.
 
 ## DOM contract
 
-- English badge: `<span class="cr-enhancer-dub-badge" data-kind="en" aria-label="English dub available">EN DUB</span>`
+- English badge (green): `<span class="cr-enhancer-dub-badge" data-kind="en" aria-label="English dub available">EN DUB</span>`
+- No-dub label (black): `<span class="cr-enhancer-dub-badge" data-kind="no-dub" aria-label="Subtitled only, no dub">no-dub</span>`
 - No-English tag (red): `<span class="cr-enhancer-dub-badge" data-kind="no-en" aria-label="Dubbed, but not in English">no-en</span>`
 - The badge's parent gets class `cr-enhancer-positioned` only if it had no
   positioning of its own.

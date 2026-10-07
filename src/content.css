@@ -22,6 +22,10 @@
   pointer-events: none;
 }
 
+.cr-enhancer-dub-badge[data-kind='en'] {
+  background: #1a7f37;
+}
+
 .cr-enhancer-dub-badge[data-kind='no-en'] {
   background: #c8102e;
 }

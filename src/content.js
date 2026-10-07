@@ -1,6 +1,6 @@
 // Isolated-world content script: receives API responses from page-hook.js,
-// keeps track of each series' audio, and badges cards: one badge for series
-// with English audio, another for series dubbed in other languages only. Runs at document_start so no early response is missed.
+// keeps track of each series' audio, and badges cards: English dub, dubbed
+// but not in English, or no dub at all. Runs at document_start so no early response is missed.
 (() => {
   const SOURCE = 'cr-enhancer';
   const BADGE_CLASS = 'cr-enhancer-dub-badge';
@@ -10,6 +10,7 @@
   const BADGES = {
     en: { text: 'EN DUB', label: 'English dub available' },
     'no-en': { text: 'no-en', label: 'Dubbed, but not in English' },
+    'no-dub': { text: 'no-dub', label: 'Subtitled only, no dub' },
   };
 
   // Series id -> { hasEnglish, hasDub }. A series that isn't here is unknown.
@@ -31,7 +32,8 @@
     return series.length > 0 || episodes.length > 0;
   };
 
-  // Which badge a card linking to href should carry: 'en', 'no-en', or null.
+  // Which badge a card linking to href should carry, or null if the series
+  // isn't known yet.
   const badgeKindFor = (href) => {
     const target = linkTargetFromHref(href);
     if (!target) return null;
@@ -39,7 +41,7 @@
     const audio = audioBySeries.get(seriesId);
     if (!audio) return null;
     if (audio.hasEnglish) return 'en';
-    return audio.hasDub ? 'no-en' : null;
+    return audio.hasDub ? 'no-en' : 'no-dub';
   };
 
   // Each card as { host, href }: the element the badge sits on and the link

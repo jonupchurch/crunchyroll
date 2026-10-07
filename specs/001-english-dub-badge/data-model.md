@@ -11,7 +11,7 @@ An object found anywhere inside a captured `/content/v2/` response.
 |-------|------|-----|
 | `id` | string | Series id, e.g. `GG5H5XQX4`. The key |
 | `series_metadata.audio_locales` | string[] | Full audio list for a series |
-| `series_metadata.is_dubbed` | boolean | The site's "has a dub" flag. Counts only when exactly `true` |
+| `series_metadata.is_dubbed` | boolean | The site's "has a dub" flag. If it isn't a boolean, more than one audio track counts as dubbed |
 | `movie_listing_metadata.*` | | Same fields, for film listings (unconfirmed) |
 
 Validation: indexed only if `id` is a non-empty string and `audio_locales` is
@@ -34,9 +34,9 @@ Watchlist items wrap an episode: `{ panel: { id, type: 'episode', episode_metada
 `Map<episodeId: string, seriesId: string>` for cards that link to an episode.
 
 - `hasEnglish` is true when `audio_locales` includes `en-US`.
-- `hasDub` is true when `is_dubbed` is `true`.
-- Badge: `hasEnglish` → `EN DUB`; else `hasDub` → `no-en`; else none.
-- A series absent from the map is **unknown**: no badge of either kind.
+- `hasDub` follows `is_dubbed`, falling back to track count.
+- Badge: `hasEnglish` → `EN DUB`; else `hasDub` → `no-en`; else `no-dub`.
+- A series absent from the map is **unknown**: no badge of any kind.
 - Merge rule when a series is seen again: true wins, per field. A later response that
   omits English never removes a badge already earned in this tab, since some
   responses may be partial.
@@ -50,7 +50,7 @@ overlay beside it (watchlist).
 | State | Meaning |
 |-------|---------|
 | unmarked | Not yet evaluated, or series still unknown |
-| badged | Carries exactly one badge element, `en` or `no-en` |
+| badged | Carries exactly one badge element: `en`, `no-en`, or `no-dub` |
 
 Transitions: unmarked → badged when the index says true. There is no
 badged → unmarked transition within a page view. If the site reuses a card

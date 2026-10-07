@@ -19,8 +19,9 @@ Expected: all tests pass. Covers indexing (see
 ## 2. Browse page (User Story 1)
 
 1. Reload the extension, open `crunchyroll.com/videos/popular`.
-2. Frieren: Beyond Journey's End shows an `EN DUB` pill on its poster.
-3. Pick a card with no pill, open the series, and confirm it has no dub.
+2. Frieren: Beyond Journey's End shows a green `EN DUB` pill on its poster.
+3. Pick a card with a black `no-dub` label, open the series, and confirm it
+   has no dub.
    Pick a card with a red `no-en` tag and confirm its audio options include
    a dub but no English.
 4. Pick five more cards at random and check each against its series page.

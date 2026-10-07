@@ -46,25 +46,30 @@ test('collectAudioInfo: series without English audio', () => {
   assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GXXXXXXXX', hasEnglish: false, hasDub: true }]);
 });
 
-test('collectAudioInfo: undubbed series, and is_dubbed must be exactly true', () => {
+test('collectAudioInfo: undubbed series', () => {
+  const item = { id: 'GSUBONLY1', series_metadata: { is_dubbed: false, audio_locales: ['ja-JP', 'zh-CN'] } };
+  assert.deepEqual(collectAudioInfo([item]).series, [{ id: 'GSUBONLY1', hasEnglish: false, hasDub: false }]);
+});
+
+test('collectAudioInfo: without a usable is_dubbed flag, track count decides', () => {
   const items = [
-    { id: 'GSUBONLY1', series_metadata: { is_dubbed: false, audio_locales: ['ja-JP'] } },
-    { id: 'GTRUTHY01', series_metadata: { is_dubbed: 'true', audio_locales: ['ja-JP', 'de-DE'] } },
+    { id: 'GONETRACK', series_metadata: { audio_locales: ['ja-JP'] } },
+    { id: 'GTWOTRACK', series_metadata: { is_dubbed: 'no', audio_locales: ['ja-JP', 'de-DE'] } },
   ];
   assert.deepEqual(collectAudioInfo(items).series, [
-    { id: 'GSUBONLY1', hasEnglish: false, hasDub: false },
-    { id: 'GTRUTHY01', hasEnglish: false, hasDub: false },
+    { id: 'GONETRACK', hasEnglish: false, hasDub: false },
+    { id: 'GTWOTRACK', hasEnglish: false, hasDub: true },
   ]);
 });
 
 test('collectAudioInfo: other English-looking locales do not count', () => {
   const item = { id: 'GXXXXXXXX', series_metadata: { audio_locales: ['en-IN', 'EN-us', 'en'] } };
-  assert.deepEqual(collectAudioInfo([item]).series, [{ id: 'GXXXXXXXX', hasEnglish: false, hasDub: false }]);
+  assert.deepEqual(collectAudioInfo([item]).series, [{ id: 'GXXXXXXXX', hasEnglish: false, hasDub: true }]);
 });
 
 test('collectAudioInfo: film listings', () => {
   const item = { id: 'GMOVIE001', movie_listing_metadata: { audio_locales: ['ja-JP', 'en-US'] } };
-  assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GMOVIE001', hasEnglish: true, hasDub: false }]);
+  assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GMOVIE001', hasEnglish: true, hasDub: true }]);
 });
 
 test('collectAudioInfo: items nested inside rows', () => {
@@ -114,7 +119,7 @@ test('collectAudioInfo: malformed items are skipped', () => {
     ],
   };
   const result = collectAudioInfo(body);
-  assert.deepEqual(result.series, [{ id: 'GMIXED001', hasEnglish: false, hasDub: false }]);
+  assert.deepEqual(result.series, [{ id: 'GMIXED001', hasEnglish: false, hasDub: true }]);
   assert.deepEqual(result.episodes, []);
 });
 

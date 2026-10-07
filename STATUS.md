@@ -43,10 +43,11 @@
 
 ## Requirements decided
 
-- `EN DUB` badge when a series has an English audio version (`en-US`).
+- Green `EN DUB` badge when a series has an English audio version (`en-US`).
 - Red `no-en` tag when the site marks the series dubbed (`is_dubbed`) but it
   has no `en-US` audio (added 2026-10-07; replaces "no badge otherwise").
-- Nothing on undubbed series. Other languages are never named.
+- Black `no-dub` label on undubbed series (added 2026-10-07). Nothing only
+  when the series is unknown. Other languages are never named.
 - Badge is overlaid on a corner of the poster; which corner is a plan detail.
 
 ## Open decisions
@@ -61,6 +62,6 @@
 
 ## Next action
 
-Reload and check the new `no-en` tag (T024). Check one unbadged "Sub | Dub" watchlist card (Do It Yourself!!) against its
+Reload and check the `no-en` and `no-dub` labels (T024, T028). Check one unbadged "Sub | Dub" watchlist card (Do It Yourself!!) against its
 series page, then browse, home, search, and a long scroll (T010, T013, T014,
 T017, T020).

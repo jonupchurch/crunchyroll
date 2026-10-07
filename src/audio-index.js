@@ -15,6 +15,11 @@
     return isObject(metadata) && Array.isArray(metadata.audio_locales) ? metadata : null;
   };
 
+  // The site's own flag decides; without one, more than one audio track means
+  // something besides the original exists.
+  const hasDub = (metadata) =>
+    typeof metadata.is_dubbed === 'boolean' ? metadata.is_dubbed : metadata.audio_locales.length > 1;
+
   // An episode only lists its own audio tracks, so it can show that its series
   // has English but never that it doesn't, and says nothing about other dubs.
   const episodeHasEnglish = (metadata) =>
@@ -41,7 +46,7 @@
           series.push({
             id: node.id,
             hasEnglish: metadata.audio_locales.includes(ENGLISH_LOCALE),
-            hasDub: metadata.is_dubbed === true,
+            hasDub: hasDub(metadata),
           });
         }
 

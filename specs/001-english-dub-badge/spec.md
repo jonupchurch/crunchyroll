@@ -14,6 +14,7 @@
 
 - Q: Where should the badge sit on a series card? → A: Overlaid on a corner of the poster image.
 - Change requested after the first working build: series that are dubbed but not in English get a red `no-en` tag in the same spot. This replaces the earlier "no badge when there's no English" rule for dubbed series; undubbed series still get nothing.
+- Second change, same day: undubbed (subtitled-only) series get a black `no-dub` label, and the `EN DUB` badge turns green. Every series the extension has data for now carries one of the three labels; only unknown series get nothing.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -34,7 +35,7 @@ options listed on that series' own page.
 **Acceptance Scenarios**:
 
 1. **Given** a series that has an English audio version, **When** its card is shown on the browse page, **Then** the card shows the English dub badge.
-2. **Given** a series with no dub at all, **When** its card is shown, **Then** the card shows no badge and looks exactly as it does without the extension.
+2. **Given** a series with no dub at all, **When** its card is shown, **Then** the card shows a black `no-dub` label.
 5. **Given** a series the site marks as dubbed but with no English audio version, **When** its card is shown, **Then** the card shows a red `no-en` tag instead, without naming the languages it is dubbed in.
 3. **Given** a series whose original audio is English, **When** its card is shown, **Then** the card shows the badge (it has English audio).
 4. **Given** a series with audio in several languages including English, **When** its card is shown, **Then** only the single English badge appears; no other languages are listed.
@@ -84,7 +85,7 @@ reloading the tab.
 
 ### Edge Cases
 
-- Audio information for a series isn't known yet, or can't be obtained: no badge is shown. A missing badge is acceptable; a wrong badge is not.
+- Audio information for a series isn't known yet, or can't be obtained: no label of any kind is shown. A missing label is acceptable; a wrong one is not.
 - The same series appears in several places on one page (e.g. two home page rows): every instance is badged the same way.
 - The site changes its layout so cards can't be recognised: the extension shows nothing and the site keeps working normally.
 - A page has hundreds of cards after long scrolling: badging stays unobtrusive and scrolling stays smooth.
@@ -96,7 +97,7 @@ reloading the tab.
 ### Functional Requirements
 
 - **FR-001**: The extension MUST show an English dub badge on a series card when, and only when, that series has an English (en-US) audio version.
-- **FR-002**: The extension MUST show a red `no-en` tag, in the same position, on a series card when the site marks the series as dubbed and it has no English audio version. Cards for series with no dub at all MUST get no badge, placeholder, or other marker.
+- **FR-002**: The extension MUST show a red `no-en` tag, in the same position, on a series card when the site marks the series as dubbed and it has no English audio version. Cards for series with no dub at all MUST show a black `no-dub` label in the same position. The English badge MUST be green.
 - **FR-003**: The extension MUST NOT name or list any audio language other than English.
 - **FR-004**: The badge MUST apply on every page that shows series cards: home, browse, search results, and watchlist.
 - **FR-005**: The badge MUST appear on cards that load after the initial page view (scrolling, in-site navigation) without a page reload.
@@ -119,7 +120,7 @@ reloading the tab.
 ### Measurable Outcomes
 
 - **SC-001**: In a spot check of 50 cards across home, browse, search, and watchlist, every badge (and every absence of one) matches the audio options on the series' own page.
-- **SC-002**: Zero cards for series without English audio show the English badge, and zero cards for series with English audio or with no dub show the `no-en` tag.
+- **SC-002**: Zero cards for series without English audio show the English badge, zero cards for series with English audio or with no dub show the `no-en` tag, and zero dubbed series show `no-dub`.
 - **SC-003**: Badges appear within 1 second of a card becoming visible in at least 95% of cases.
 - **SC-004**: A viewer can tell whether a visible series has an English dub without opening it.
 - **SC-005**: Page loading and scrolling feel no different with the extension on than with it off, including after scrolling through 500+ cards.
@@ -132,8 +133,8 @@ reloading the tab.
 - A series counts as having English audio if any of its seasons does.
 - The series' own page (hero/detail view) is out of scope; it already shows audio options.
 - Which poster corner is a design detail for planning: whichever one doesn't collide with the site's own poster overlays.
-- "Dubbed" means the site's own dubbed flag for the series, the same one behind its "Sub | Dub" label.
-- Two fixed labels (`EN DUB`, `no-en`); no settings, toggles, or other languages in this feature.
+- "Dubbed" means the site's own dubbed flag for the series, the same one behind its "Sub | Dub" label. If a listing has no such flag, having more than one audio track counts as dubbed.
+- Three fixed labels (`EN DUB` green, `no-en` red, `no-dub` black); no settings, toggles, or other languages in this feature.
 - Filtering or sorting the catalog by dub availability is out of scope.
 - Target browser is Edge on desktop; other Chromium browsers are expected to work but aren't verified.
 - The feature depends on the site's own undocumented catalog data, which can change without notice; when it does, the expected failure is "no badges", not a broken site.
