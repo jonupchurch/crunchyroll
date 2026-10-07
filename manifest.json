@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Crunchyroll Enhancer",
+  "description": "Unofficial quality-of-life additions for crunchyroll.com, starting with audio-language badges on series cards.",
+  "version": "0.1.0",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.crunchyroll.com/*"],
+      "js": ["src/page-hook.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.crunchyroll.com/*"],
+      "js": ["src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

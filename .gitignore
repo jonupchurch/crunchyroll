@@ -1,0 +1,20 @@
+# Spec-Kit runtime pointer to the active feature (specs/ itself is committed)
+.specify/feature.json
+
+# Machine-local Claude Code settings
+.claude/settings.local.json
+
+# dependencies / build output
+node_modules/
+dist/
+*.zip
+*.crx
+*.pem
+
+# env files
+.env*
+!.env.example
+
+# OS cruft
+.DS_Store
+Thumbs.db
