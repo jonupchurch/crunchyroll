@@ -21,15 +21,21 @@ Pure functions, no DOM, no extension APIs.
 ```text
 ENGLISH_LOCALE = 'en-US'
 
-collectAudioInfo(body: unknown) -> Array<{ id: string, hasEnglish: boolean }>
-  Walks body (depth-limited) and returns one entry per catalog item found.
-  Never throws. Returns [] for anything that isn't an object or array.
+collectAudioInfo(body: unknown) -> {
+  series:   Array<{ id: string, hasEnglish: boolean }>,
+  episodes: Array<{ id: string, seriesId: string }>
+}
+  Walks body (depth-limited). `series` has one entry per catalog item found,
+  plus a `hasEnglish: true` entry for the series of any episode whose
+  versions include en-US (an episode never yields a false entry).
+  `episodes` maps each episode found to its series.
+  Never throws. Returns empty arrays for anything that isn't an object or array.
 
-seriesIdFromHref(href: string) -> string | null
-  '/series/GG5H5XQX4/frieren'                       -> 'GG5H5XQX4'
-  'https://www.crunchyroll.com/de/series/GG5H5XQX4' -> 'GG5H5XQX4'
-  '/watch/G9DUE0QJ2/episode'                        -> null
-  '' / non-string                                   -> null
+linkTargetFromHref(href: string) -> { kind: 'series' | 'episode', id: string } | null
+  '/series/GG5H5XQX4/frieren'                       -> { kind: 'series',  id: 'GG5H5XQX4' }
+  'https://www.crunchyroll.com/de/series/GG5H5XQX4' -> { kind: 'series',  id: 'GG5H5XQX4' }
+  '/watch/GPWUKE2M5/and-so-off-into-the-world'      -> { kind: 'episode', id: 'GPWUKE2M5' }
+  '/videos/popular', '' , non-string                -> null
 ```
 
 Exposed as `globalThis.crEnhancer` in the browser and `module.exports` in Node.
@@ -37,7 +43,7 @@ Exposed as `globalThis.crEnhancer` in the browser and `module.exports` in Node.
 ## DOM contract
 
 - Badge element: `<span class="cr-enhancer-dub-badge" aria-label="English dub available">EN DUB</span>`
-- Host link gets class `cr-enhancer-badged`.
-- At most one badge per host link.
+- The badged card gets class `cr-enhancer-badged`.
+- At most one badge per card.
 - The extension adds only elements and classes prefixed `cr-enhancer-`, and
   removes only its own.

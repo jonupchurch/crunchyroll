@@ -17,9 +17,20 @@ Validation: indexed only if `id` is a non-empty string and `audio_locales` is
 an array. Non-string entries in the array are ignored. Anything else is
 skipped silently.
 
+## Episode panel (input, untrusted)
+
+Watchlist items wrap an episode: `{ panel: { id, type: 'episode', episode_metadata } }`.
+
+| Field | Type | Use |
+|-------|------|-----|
+| `id` | string | Episode id, e.g. `GPWUKE2M5`. What the card links to |
+| `episode_metadata.series_id` | string | Series the episode belongs to |
+| `episode_metadata.versions[].audio_locale` | string | That episode's audio tracks. Can only prove English exists, never that it doesn't |
+
 ## Audio index (state)
 
-`Map<seriesId: string, hasEnglish: boolean>`
+`Map<seriesId: string, hasEnglish: boolean>` plus
+`Map<episodeId: string, seriesId: string>` for cards that link to an episode.
 
 - `hasEnglish` is true when `audio_locales` includes `en-US`.
 - A series absent from the map is **unknown**, which renders the same as
@@ -30,7 +41,9 @@ skipped silently.
 
 ## Card (DOM)
 
-A link whose path contains `/series/{id}` and which wraps a poster image.
+A link whose path contains `/series/{id}`, or `/watch/{episodeId}` for an
+episode whose series is known. The link may wrap the poster or be an empty
+overlay beside it (watchlist).
 
 | State | Meaning |
 |-------|---------|

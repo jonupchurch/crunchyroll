@@ -38,9 +38,22 @@
 - **Rationale**: Items carry `id` and `slug_title`, which is what the site
   builds series URLs from. The id is stable; class names on this site are
   generated and aren't.
-- **Unverified**: the actual card markup. Needs one card's HTML from the live
-  page. Watchlist cards may link to `/watch/{episode}` instead, which this
-  rule won't match.
+- **Watchlist (confirmed 2026-10-07)**: cards link to the next episode,
+  `/watch/{episodeId}/{slug}`, not the series. Each watchlist item is
+  `{ panel: <episode>, ... }` where `panel.id` is the episode id and
+  `panel.episode_metadata.series_id` is the series. So the index also keeps
+  `episode id → series id`, and a `/watch/{id}` link resolves through it.
+- **Why not just read the episode's `versions[]`**: it lists that one
+  episode's audio tracks. A series dubbed for season 1 only, with the viewer
+  up to season 2, would read as "no English" though the series has it. The
+  episode's versions are used as evidence for true only; the series-level list
+  decides otherwise. The watchlist page follows up with
+  `/cms/objects/{series ids}`, which is expected to carry `series_metadata`
+  (item not yet captured).
+- **Card markup**: the watchlist link is an empty `<a>` with class
+  `watchlist-card__content-link--{hash}` laid over the card, so the poster is
+  a sibling, not a child. Class suffixes are generated; only the
+  `watchlist-card` prefix can be relied on. Browse card markup still unseen.
 
 ## 4. Noticing new cards
 

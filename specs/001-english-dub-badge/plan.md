@@ -10,8 +10,9 @@ Badge a series card when the series has `en-US` audio. The site already sends
 the full audio list with the card data (`series_metadata.audio_locales` on
 browse items, confirmed), and the existing page hook already captures those
 responses. So: index every captured response into an in-memory
-`series id → has English audio` map, find cards in the DOM by the series id in
-their link, and overlay a pill on the poster. No requests of our own.
+`series id → has English audio` map (plus `episode id → series id`, because
+watchlist cards link to an episode), find cards in the DOM by the id in their
+link, and overlay a pill on the poster. No requests of our own.
 
 ## Technical Context
 
@@ -86,12 +87,13 @@ also exports via `module.exports` when that exists.
 
 ## Open items carried into tasks
 
-- **Card DOM is unverified.** The plan assumes a card contains a link whose
-  path includes `/series/{id}` and wraps the poster image. Needs one card's
-  HTML from the live browse page before the DOM code is written.
-- **Home, search, and watchlist shapes are unverified.** Assumed to match
-  browse. Watchlist is the likeliest to differ (its cards may point at an
-  episode, not a series). User Story 2 starts with a capture of each.
+- **Card DOM is only partly known.** Watchlist cards use an empty overlay
+  link to `/watch/{episodeId}`; the poster is elsewhere in the card. Needs a
+  whole card's HTML (watchlist and browse) before the DOM code is written.
+- **Watchlist data is confirmed**: episode panels carrying `series_id` and
+  per-episode `versions[]`. The `/cms/objects` follow-up is expected to carry
+  the series-level list but hasn't been captured.
+- **Home and search shapes are unverified.** Assumed to match browse.
 - **Which poster corner** is picked once the card DOM is known.
 
 ## Complexity Tracking
