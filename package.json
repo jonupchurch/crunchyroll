@@ -1,0 +1,7 @@
+{
+  "name": "crunchyroll-enhancer",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  }
+}

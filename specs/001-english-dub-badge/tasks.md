@@ -13,17 +13,17 @@
 
 ## Phase 1: Setup
 
-- [ ] T001 Create `package.json` with name, `"private": true`, and `"scripts": { "test": "node --test" }` only (no dependencies)
-- [ ] T002 In `manifest.json`, add `src/audio-index.js` ahead of `src/content.js` in the isolated-world content script and change that script's `run_at` to `document_start`
+- [x] T001 Create `package.json` with name, `"private": true`, and `"scripts": { "test": "node --test" }` only (no dependencies)
+- [x] T002 In `manifest.json`, add `src/audio-index.js` ahead of `src/content.js` in the isolated-world content script and change that script's `run_at` to `document_start`
 
 ---
 
 ## Phase 2: Foundational (blocks all user stories)
 
-- [ ] T003 [P] Write unit tests in `tests/audio-index.test.js` for `collectAudioInfo`: browse-style series item, `/cms/objects` series item, series without `en-US`, `movie_listing_metadata` item, watchlist `{ panel: episode }` item (episode→series mapping; true from `versions[]`, never false), nested rows, and malformed input (null, strings, missing/non-array `audio_locales`, non-string ids, over-deep nesting) returning empty results without throwing
-- [ ] T004 [P] Write unit tests in `tests/audio-index.test.js` for `linkTargetFromHref`: `/series/{id}/slug`, absolute URL, locale-prefixed path, `/watch/{id}/slug`, unrelated paths, empty and non-string input
-- [ ] T005 Implement `collectAudioInfo`, `linkTargetFromHref`, and `ENGLISH_LOCALE` in `src/audio-index.js` per contracts/internal-interfaces.md, exposed on `globalThis.crEnhancer` and `module.exports`; `npm test` passes
-- [ ] T006 In `src/content.js`, replace the scaffold log with an index: feed each captured body through `collectAudioInfo` into a `series id → hasEnglish` map (true wins) and an `episode id → series id` map, inside a try/catch so a bad body can't throw
+- [x] T003 [P] Write unit tests in `tests/audio-index.test.js` for `collectAudioInfo`: browse-style series item, `/cms/objects` series item, series without `en-US`, `movie_listing_metadata` item, watchlist `{ panel: episode }` item (episode→series mapping; true from `versions[]`, never false), nested rows, and malformed input (null, strings, missing/non-array `audio_locales`, non-string ids, over-deep nesting) returning empty results without throwing
+- [x] T004 [P] Write unit tests in `tests/audio-index.test.js` for `linkTargetFromHref`: `/series/{id}/slug`, absolute URL, locale-prefixed path, `/watch/{id}/slug`, unrelated paths, empty and non-string input
+- [x] T005 Implement `collectAudioInfo`, `linkTargetFromHref`, and `ENGLISH_LOCALE` in `src/audio-index.js` per contracts/internal-interfaces.md, exposed on `globalThis.crEnhancer` and `module.exports`; `npm test` passes
+- [x] T006 In `src/content.js`, replace the scaffold log with an index: feed each captured body through `collectAudioInfo` into a `series id → hasEnglish` map (true wins) and an `episode id → series id` map, inside a try/catch so a bad body can't throw
 
 **Checkpoint**: tests green; index fills as the site loads data (verify with a temporary console check, then remove it).
 
