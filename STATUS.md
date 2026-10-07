@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** Badges working on watchlist and browse; home/search unchecked. Filter feature proposed, not specced (2026-10-07).
+**Phase:** Badge feature working and checked on the live site; filter feature specced, waiting on browse grid markup (2026-10-07).
 
 ## What exists
 
@@ -52,17 +52,17 @@
 
 ## Open decisions
 
-- Browse (`/videos/popular`) badges seen working with the generic card rule
-  (2026-10-07). The pill overlaps the site's orange top-right corner marker
-  on some posters; move it or leave it?
-- Search seen working (2026-10-07). Home unchecked. A smaller badge for
-  narrow posters (search's series list) is written but not yet seen.
+- Home page: some cards stay unlabelled (the extension has no data for
+  them). User accepted this as good enough; cause not investigated.
+- The pill overlaps the site's orange top-right corner marker on some
+  posters; move it or leave it? Unanswered.
 - Filter feature: specced at `specs/002-label-filter/spec.md` on branch
-  `002-label-filter` (cut from the unmerged badge branch). Not planned or
-  built. Known markup: the site's Filter control is
+  `002-label-filter` (cut from the badge branch). Not planned or built.
+  Known markup: the site's Filter control is
   `li.dropdown-item > .erc-browse-filtering`; browse cards have a
-  `[data-t="hover-component"]` overlay with its own poster link (which also
-  gets a badge). Still unknown: the grid cell that has to be hidden.
+  `[data-t="hover-component"]` overlay with its own poster link. Still
+  unknown: the grid cell that has to be hidden.
+- Neither branch is merged to `main` yet.
 
 ## Decided
 
@@ -71,6 +71,5 @@
 ## Next action
 
 Get the browse card's ancestor chain (which element is the grid cell), then
-`speckit-plan` for 002. Badge feature (001) still has open live checks:
-home, search, long scroll. `no-en` and `no-dub` confirmed working by the
-user (2026-10-07).
+`speckit-plan` for 002. Merge to `main` when the user says, or with the
+filter.

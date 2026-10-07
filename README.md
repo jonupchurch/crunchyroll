@@ -1,8 +1,16 @@
 # Crunchyroll Enhancer
 
 An unofficial browser extension for Edge (and other Chromium browsers) that
-adds quality-of-life features to crunchyroll.com. First planned feature:
-badges on series cards showing which audio languages are available.
+adds quality-of-life features to crunchyroll.com. It labels every series card
+by dub availability:
+
+- green `EN DUB`: the series has English audio
+- red `no-en`: dubbed, but not in English
+- black `no-dub`: subtitled only
+
+A card with no label is one the extension has no data for yet. The label
+describes the whole series, so it can differ from the site's own "Sub | Dub"
+text, which on some cards describes a single episode.
 
 Not affiliated with or endorsed by Crunchyroll. It relies on the site's
 undocumented internal API, so it can break whenever the site changes.
@@ -11,20 +19,25 @@ undocumented internal API, so it can break whenever the site changes.
 
 1. Open `edge://extensions` and turn on **Developer mode**.
 2. Click **Load unpacked** and pick this folder.
-3. Open crunchyroll.com. With DevTools open and the "Verbose" log level on,
-   you should see `[cr-enhancer] captured ...` lines in the console.
+3. Open crunchyroll.com. Series cards on browse, search, and your watchlist
+   get a label in the top right of the poster. The home page is patchier:
+   some rows stay unlabelled.
 
 After changing code, hit **Reload** on the extension card and refresh the tab.
 
 ## How it works
 
-- `src/page-hook.js` runs in the page's own JS world and wraps `fetch` to
-  copy the catalog API responses the site is already making.
-- `src/content.js` runs in the extension's isolated world, receives those
-  responses, and will decorate the page.
+- `src/page-hook.js` runs in the page's own JS world and wraps `fetch` and
+  `XMLHttpRequest` to copy the catalog API responses the site is already
+  making. The extension makes no requests of its own.
+- `src/audio-index.js` is the pure logic: it pulls each series' audio
+  languages out of those responses and reads series ids out of card links.
+- `src/content.js` runs in the extension's isolated world, keeps an in-memory
+  index of series, and labels cards as they appear.
 - `src/content.css` styles whatever the extension injects.
 
-Plain JavaScript, no build step.
+Plain JavaScript, no build step. Run the unit tests with `npm test`
+(Node 22+).
 
 ## Development process
 

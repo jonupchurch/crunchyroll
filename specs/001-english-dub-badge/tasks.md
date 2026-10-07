@@ -35,10 +35,10 @@
 
 **Independent Test**: quickstart.md section 2.
 
-- [ ] T007 [US1] Get one whole browse card's outerHTML from the live site; record the card container, poster element, and link structure in `specs/001-english-dub-badge/research.md` and pick the poster corner
+- [x] T007 [US1] Get one whole browse card's outerHTML from the live site; record the card container, poster element, and link structure in `specs/001-english-dub-badge/research.md` and pick the poster corner
 - [x] T008 [US1] Add badge styles to `src/content.css`: `.cr-enhancer-dub-badge` pill (solid dark background, light text, absolute position in the chosen corner, `pointer-events: none`) and `.cr-enhancer-positioned` for hosts with no positioning of their own
 - [x] T009 [US1] In `src/content.js`, add `badgeCards(root)`: find card links, resolve each via `linkTargetFromHref` and the index, and add one badge element (per the DOM contract) to cards whose series has English; skip unknown series; never add a second badge
-- [ ] T010 [US1] Run `badgeCards` once the body exists and again whenever the index gains entries; walk quickstart.md section 2 on the live site
+- [x] T010 [US1] Run `badgeCards` once the body exists and again whenever the index gains entries; walk quickstart.md section 2 on the live site
 
 **Checkpoint**: browse page badges correct on first load.
 
@@ -52,8 +52,8 @@
 
 - [x] T011 [US2] Get one whole watchlist card's outerHTML (the `watchlist-card` container around the empty overlay link) and record where the poster sits in `specs/001-english-dub-badge/research.md`
 - [x] T012 [US2] Extend card finding and badge placement in `src/content.js` and `src/content.css` for watchlist cards (`/watch/{episodeId}` links resolved through the episode map; badge attached to the card's poster, not the empty link)
-- [ ] T013 [US2] Check home and search on the live site; if cards there go unbadged, capture one response item and one card's HTML for the failing page, add a failing case to `tests/audio-index.test.js`, and fix in `src/audio-index.js` / `src/content.js`
-- [ ] T014 [US2] Walk quickstart.md section 4
+- [x] T013 [US2] Check home and search on the live site; if cards there go unbadged, capture one response item and one card's HTML for the failing page, add a failing case to `tests/audio-index.test.js`, and fix in `src/audio-index.js` / `src/content.js`
+- [x] T014 [US2] Walk quickstart.md section 4
 
 ---
 
@@ -65,14 +65,14 @@
 
 - [x] T015 [US3] In `src/content.js`, add a `MutationObserver` on `document.body` (`childList`, `subtree`) that schedules one `badgeCards` pass per animation frame
 - [x] T016 [US3] Handle recycled card elements in `src/content.js`: when a badged card's link now points at a series without English (or unknown), remove the badge and the `cr-enhancer-badged` class
-- [ ] T017 [US3] Walk quickstart.md section 3, including scrolling past 500 cards
+- [x] T017 [US3] Walk quickstart.md section 3, including scrolling past 500 cards
 
 ---
 
 ## Phase 6: Polish
 
-- [ ] T018 [P] Update `README.md`: what the badge does, `npm test`, and that the hook covers XHR as well as fetch
-- [ ] T019 [P] Update `STATUS.md` and `CHANGELOG.md`
+- [x] T018 [P] Update `README.md`: what the badge does, `npm test`, and that the hook covers XHR as well as fetch
+- [x] T019 [P] Update `STATUS.md` and `CHANGELOG.md`
 - [ ] T020 Walk quickstart.md section 5 (no console errors; site unchanged with the extension off), read back the full diff, and remove any leftover debug logging
 
 ---
@@ -105,3 +105,10 @@ MVP is Phases 1 to 3: badges on the browse page. Stop and validate there, then a
 - [x] T026 In `src/audio-index.js`, fall back to "more than one audio track" when `is_dubbed` isn't a boolean, so a missing flag can't produce a false `no-dub`; tests in `tests/audio-index.test.js`
 - [x] T027 Green background for `data-kind='en'` in `src/content.css` (`no-dub` keeps the default black)
 - [x] T028 On the live site, check a `no-dub` card against its series page and confirm all three colours read clearly over artwork
+
+## Live-site results (2026-10-07)
+
+Checked by the user from screenshots: watchlist (including a long scroll),
+browse, and search label correctly. The home page labels most rows but leaves
+some cards unlabelled; accepted as good enough, cause not investigated. Not
+done: scrolling browse past 500 cards, and the console-error check in T020.
