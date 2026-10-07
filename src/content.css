@@ -21,3 +21,7 @@
   white-space: nowrap;
   pointer-events: none;
 }
+
+.cr-enhancer-dub-badge[data-kind='no-en'] {
+  background: #c8102e;
+}

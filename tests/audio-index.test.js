@@ -37,34 +37,45 @@ test('English locale is en-US', () => {
 
 test('collectAudioInfo: series with English audio', () => {
   const result = collectAudioInfo({ total: 1, data: [browseItem] });
-  assert.deepEqual(result.series, [{ id: 'GG5H5XQX4', hasEnglish: true }]);
+  assert.deepEqual(result.series, [{ id: 'GG5H5XQX4', hasEnglish: true, hasDub: true }]);
   assert.deepEqual(result.episodes, []);
 });
 
 test('collectAudioInfo: series without English audio', () => {
   const item = { id: 'GXXXXXXXX', series_metadata: { is_dubbed: true, audio_locales: ['ja-JP', 'de-DE'] } };
-  assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GXXXXXXXX', hasEnglish: false }]);
+  assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GXXXXXXXX', hasEnglish: false, hasDub: true }]);
+});
+
+test('collectAudioInfo: undubbed series, and is_dubbed must be exactly true', () => {
+  const items = [
+    { id: 'GSUBONLY1', series_metadata: { is_dubbed: false, audio_locales: ['ja-JP'] } },
+    { id: 'GTRUTHY01', series_metadata: { is_dubbed: 'true', audio_locales: ['ja-JP', 'de-DE'] } },
+  ];
+  assert.deepEqual(collectAudioInfo(items).series, [
+    { id: 'GSUBONLY1', hasEnglish: false, hasDub: false },
+    { id: 'GTRUTHY01', hasEnglish: false, hasDub: false },
+  ]);
 });
 
 test('collectAudioInfo: other English-looking locales do not count', () => {
   const item = { id: 'GXXXXXXXX', series_metadata: { audio_locales: ['en-IN', 'EN-us', 'en'] } };
-  assert.deepEqual(collectAudioInfo([item]).series, [{ id: 'GXXXXXXXX', hasEnglish: false }]);
+  assert.deepEqual(collectAudioInfo([item]).series, [{ id: 'GXXXXXXXX', hasEnglish: false, hasDub: false }]);
 });
 
 test('collectAudioInfo: film listings', () => {
   const item = { id: 'GMOVIE001', movie_listing_metadata: { audio_locales: ['ja-JP', 'en-US'] } };
-  assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GMOVIE001', hasEnglish: true }]);
+  assert.deepEqual(collectAudioInfo({ data: [item] }).series, [{ id: 'GMOVIE001', hasEnglish: true, hasDub: false }]);
 });
 
 test('collectAudioInfo: items nested inside rows', () => {
   const body = { data: [{ title: 'Row', items: [{ panel: browseItem }] }] };
-  assert.deepEqual(collectAudioInfo(body).series, [{ id: 'GG5H5XQX4', hasEnglish: true }]);
+  assert.deepEqual(collectAudioInfo(body).series, [{ id: 'GG5H5XQX4', hasEnglish: true, hasDub: true }]);
 });
 
 test('collectAudioInfo: watchlist episode maps to its series and proves English', () => {
   const result = collectAudioInfo({ data: [watchlistItem] });
   assert.deepEqual(result.episodes, [{ id: 'GPWUKE2M5', seriesId: 'G63K95846' }]);
-  assert.deepEqual(result.series, [{ id: 'G63K95846', hasEnglish: true }]);
+  assert.deepEqual(result.series, [{ id: 'G63K95846', hasEnglish: true, hasDub: false }]);
 });
 
 test('collectAudioInfo: an episode without English says nothing about its series', () => {
@@ -103,7 +114,7 @@ test('collectAudioInfo: malformed items are skipped', () => {
     ],
   };
   const result = collectAudioInfo(body);
-  assert.deepEqual(result.series, [{ id: 'GMIXED001', hasEnglish: false }]);
+  assert.deepEqual(result.series, [{ id: 'GMIXED001', hasEnglish: false, hasDub: false }]);
   assert.deepEqual(result.episodes, []);
 });
 

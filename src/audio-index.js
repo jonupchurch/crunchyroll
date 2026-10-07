@@ -10,13 +10,13 @@
   const isObject = (value) => typeof value === 'object' && value !== null;
   const isId = (value) => typeof value === 'string' && value !== '';
 
-  const audioLocalesOf = (item) => {
+  const listingMetadataOf = (item) => {
     const metadata = item.series_metadata ?? item.movie_listing_metadata;
-    return isObject(metadata) && Array.isArray(metadata.audio_locales) ? metadata.audio_locales : null;
+    return isObject(metadata) && Array.isArray(metadata.audio_locales) ? metadata : null;
   };
 
   // An episode only lists its own audio tracks, so it can show that its series
-  // has English but never that it doesn't.
+  // has English but never that it doesn't, and says nothing about other dubs.
   const episodeHasEnglish = (metadata) =>
     metadata.audio_locale === ENGLISH_LOCALE ||
     (Array.isArray(metadata.versions) &&
@@ -36,15 +36,19 @@
       }
 
       if (isId(node.id)) {
-        const audioLocales = audioLocalesOf(node);
-        if (audioLocales) {
-          series.push({ id: node.id, hasEnglish: audioLocales.includes(ENGLISH_LOCALE) });
+        const metadata = listingMetadataOf(node);
+        if (metadata) {
+          series.push({
+            id: node.id,
+            hasEnglish: metadata.audio_locales.includes(ENGLISH_LOCALE),
+            hasDub: metadata.is_dubbed === true,
+          });
         }
 
         const episode = node.episode_metadata;
         if (isObject(episode) && isId(episode.series_id)) {
           episodes.push({ id: node.id, seriesId: episode.series_id });
-          if (episodeHasEnglish(episode)) series.push({ id: episode.series_id, hasEnglish: true });
+          if (episodeHasEnglish(episode)) series.push({ id: episode.series_id, hasEnglish: true, hasDub: false });
         }
       }
 

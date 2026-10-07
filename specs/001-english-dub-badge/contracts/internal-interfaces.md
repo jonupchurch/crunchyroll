@@ -22,12 +22,13 @@ Pure functions, no DOM, no extension APIs.
 ENGLISH_LOCALE = 'en-US'
 
 collectAudioInfo(body: unknown) -> {
-  series:   Array<{ id: string, hasEnglish: boolean }>,
+  series:   Array<{ id: string, hasEnglish: boolean, hasDub: boolean }>,
   episodes: Array<{ id: string, seriesId: string }>
 }
   Walks body (depth-limited). `series` has one entry per catalog item found,
-  plus a `hasEnglish: true` entry for the series of any episode whose
-  versions include en-US (an episode never yields a false entry).
+  plus a `hasEnglish: true, hasDub: false` entry for the series of any episode
+  whose versions include en-US (an episode never yields `hasEnglish: false`).
+  `hasDub` is the item's `is_dubbed === true`.
   `episodes` maps each episode found to its series.
   Never throws. Returns empty arrays for anything that isn't an object or array.
 
@@ -42,7 +43,8 @@ Exposed as `globalThis.crEnhancer` in the browser and `module.exports` in Node.
 
 ## DOM contract
 
-- Badge element: `<span class="cr-enhancer-dub-badge" aria-label="English dub available">EN DUB</span>`
+- English badge: `<span class="cr-enhancer-dub-badge" data-kind="en" aria-label="English dub available">EN DUB</span>`
+- No-English tag (red): `<span class="cr-enhancer-dub-badge" data-kind="no-en" aria-label="Dubbed, but not in English">no-en</span>`
 - The badge's parent gets class `cr-enhancer-positioned` only if it had no
   positioning of its own.
 - At most one badge per card.

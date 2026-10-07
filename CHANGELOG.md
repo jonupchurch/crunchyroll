@@ -14,6 +14,7 @@ All notable changes to this project are documented here. Format follows
   (`specs/001-english-dub-badge/`).
 - `EN DUB` badge on series cards whose series has English audio, built from
   the card data the site already loads. Unit tests via `npm test`.
+- Red `no-en` tag on cards whose series is dubbed but not in English.
 
 ### Changed
 
