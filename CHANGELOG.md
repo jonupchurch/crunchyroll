@@ -16,6 +16,7 @@ All notable changes to this project are documented here. Format follows
   the card data the site already loads. Unit tests via `npm test`.
 - Red `no-en` tag on cards whose series is dubbed but not in English, and a
   black `no-dub` label on subtitled-only series. `EN DUB` is green.
+- Spec for filtering browse cards by label (`specs/002-label-filter/`).
 
 ### Changed
 

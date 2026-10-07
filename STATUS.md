@@ -56,9 +56,12 @@
   (2026-10-07). The pill overlaps the site's orange top-right corner marker
   on some posters; move it or leave it?
 - Home and search unchecked. `no-en` / `no-dub` not yet seen on a real card.
-- Requested next: a filter bar on browse pages to show/hide cards by label.
-  Separate feature, needs its own spec; waiting on browse card and
-  filter-bar markup.
+- Filter feature: specced at `specs/002-label-filter/spec.md` on branch
+  `002-label-filter` (cut from the unmerged badge branch). Not planned or
+  built. Known markup: the site's Filter control is
+  `li.dropdown-item > .erc-browse-filtering`; browse cards have a
+  `[data-t="hover-component"]` overlay with its own poster link (which also
+  gets a badge). Still unknown: the grid cell that has to be hidden.
 
 ## Decided
 
@@ -66,6 +69,6 @@
 
 ## Next action
 
-Reload and check the `no-en` and `no-dub` labels (T024, T028). Check one unbadged "Sub | Dub" watchlist card (Do It Yourself!!) against its
-series page, then browse, home, search, and a long scroll (T010, T013, T014,
-T017, T020).
+Get the browse card's ancestor chain (which element is the grid cell), then
+`speckit-plan` for 002. Badge feature (001) still has open live checks:
+home, search, long scroll, a real `no-en` and `no-dub` card.
