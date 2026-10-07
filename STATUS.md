@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** English dub badge working on the watchlist; other pages unchecked (2026-10-07).
+**Phase:** Badges working on watchlist and browse; home/search unchecked. Filter feature proposed, not specced (2026-10-07).
 
 ## What exists
 
@@ -52,9 +52,13 @@
 
 ## Open decisions
 
-- Does the generic card rule (a `/series/` link wrapping an image) match the
-  cards on browse, home, and search? No markup captured for those.
-- Whether anything besides the badge belongs in the initial feature set.
+- Browse (`/videos/popular`) badges seen working with the generic card rule
+  (2026-10-07). The pill overlaps the site's orange top-right corner marker
+  on some posters; move it or leave it?
+- Home and search unchecked. `no-en` / `no-dub` not yet seen on a real card.
+- Requested next: a filter bar on browse pages to show/hide cards by label.
+  Separate feature, needs its own spec; waiting on browse card and
+  filter-bar markup.
 
 ## Decided
 
