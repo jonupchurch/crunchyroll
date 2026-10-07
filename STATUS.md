@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** English dub badge in progress: data indexing done, DOM badging next (2026-10-07).
+**Phase:** English dub badge written, not yet seen working on the live site (2026-10-07).
 
 ## What exists
 
@@ -12,10 +12,12 @@
   `specs/001-english-dub-badge/spec.md` (branch `001-english-dub-badge`).
   Passes its quality checklist; no open items.
 - Plan, research, data model, contracts, quickstart, and tasks alongside it.
-  T001-T006 done.
-- `src/audio-index.js` (pure logic, 16 unit tests via `npm test`) and an
-  in-memory series index in `content.js`. The index is untested on the live
-  site and nothing is drawn yet.
+  Code tasks done; live-site checks open.
+- `src/audio-index.js` (pure logic, 16 unit tests via `npm test`).
+- `content.js` indexes captured responses and badges cards, re-checking on
+  every DOM change; `content.css` styles the pill (top right of the image).
+  Built against real watchlist markup; a generic rule covers other pages.
+  None of the DOM code has run in a browser yet.
 
 ## Confirmed on the live site (2026-10-07)
 
@@ -46,10 +48,8 @@
 
 ## Open decisions
 
-- Card DOM is only partly known: need a whole card's HTML (watchlist and
-  browse) to find the poster and pick the corner.
-- Home and search item shapes are unconfirmed. Film listings likely use
-  `movie_listing_metadata`.
+- Does the generic card rule (a `/series/` link wrapping an image) match the
+  cards on browse, home, and search? No markup captured for those.
 - Whether anything besides the badge belongs in the initial feature set.
 
 ## Decided
@@ -58,5 +58,5 @@
 
 ## Next action
 
-T007: get a whole browse card's HTML (and a watchlist card's for T011), then
-write the badging in `content.js` / `content.css`.
+Reload the extension and walk `specs/001-english-dub-badge/quickstart.md`,
+watchlist first. Fix whatever doesn't badge (T010, T013, T014, T017, T020).

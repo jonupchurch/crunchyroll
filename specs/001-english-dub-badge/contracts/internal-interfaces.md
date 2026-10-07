@@ -43,7 +43,8 @@ Exposed as `globalThis.crEnhancer` in the browser and `module.exports` in Node.
 ## DOM contract
 
 - Badge element: `<span class="cr-enhancer-dub-badge" aria-label="English dub available">EN DUB</span>`
-- The badged card gets class `cr-enhancer-badged`.
+- The badge's parent gets class `cr-enhancer-positioned` only if it had no
+  positioning of its own.
 - At most one badge per card.
 - The extension adds only elements and classes prefixed `cr-enhancer-`, and
   removes only its own.

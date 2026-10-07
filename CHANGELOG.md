@@ -12,8 +12,8 @@ All notable changes to this project are documented here. Format follows
 - ai-tools toolkit and Spec-Kit engine for planning.
 - Spec and implementation plan for the English dub badge
   (`specs/001-english-dub-badge/`).
-- Index of which series have English audio, built from captured responses,
-  with unit tests (`npm test`).
+- `EN DUB` badge on series cards whose series has English audio, built from
+  the card data the site already loads. Unit tests via `npm test`.
 
 ### Changed
 

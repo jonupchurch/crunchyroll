@@ -51,23 +51,37 @@
   `/cms/objects/{series ids}`, which carries the same series object as
   browse, `series_metadata.audio_locales` included (confirmed 2026-10-07,
   Wise Man's Grandchild: ja-JP, es-419, pt-BR, en-US).
-- **Card markup**: the watchlist link is an empty `<a>` with class
-  `watchlist-card__content-link--{hash}` laid over the card, so the poster is
-  a sibling, not a child. Class suffixes are generated; only the
-  `watchlist-card` prefix can be relied on. Browse card markup still unseen.
+- **Watchlist card markup (confirmed 2026-10-07)**:
+  - Card: `[data-t="watch-list-card"]`. The `data-t` attributes look stable;
+    class names carry generated suffixes (`watchlist-card--YfKgo`).
+  - First child is the empty overlay link to `/watch/{episodeId}`.
+  - Image area: `div.watchlist-card-image--{hash}`, holding a tags group, a
+    2:3 poster, a 16:9 thumbnail, and the hover/play layer. The badge goes
+    here, top right: tags sit in their own group and duration/progress are
+    along the bottom.
+  - The title is a second link straight to `/series/{id}/{slug}`, so the
+    series id is read from the card directly. The episode map stays as a
+    fallback for cards that only have a `/watch/` link.
+  - The list is virtualised (`role="listitem"` rows moved with `transform`),
+    so card elements are reused for different series while scrolling.
+- **Other pages**: no markup captured. A generic rule is used: any
+  `/series/` link that contains an `<img>` is a card and hosts its own badge.
+  Unverified.
 
 ## 4. Noticing new cards
 
 - **Decision**: One `MutationObserver` on `document.body` (`childList`,
-  `subtree`), with work batched to one pass per animation frame. A pass also
+  `subtree`, plus `href` attribute changes, since recycled cards get a new
+  link instead of a new element), with work batched to one pass per animation frame. A pass also
   runs whenever the index gains new series, since data and DOM can arrive in
   either order.
 - **Rationale**: The site is a single-page app with infinite scroll; there is
   no navigation event to rely on. Batching keeps cost flat during fast scroll.
 - **Alternatives considered**: Polling on a timer (wasteful, laggy);
   `IntersectionObserver` per card (more bookkeeping, no benefit at this size).
-- **Idempotence**: a card is marked once badged, and the badge element is
-  looked up before insert, so re-renders can't produce duplicates (FR-006).
+- **Idempotence**: every pass works out which cards should have a badge,
+  removes badges from any that shouldn't, and adds only where one is missing,
+  so re-renders and recycling can't leave duplicates or stale badges (FR-006).
 
 ## 5. Timing: not missing early responses
 
@@ -88,7 +102,7 @@
 - **Rationale**: Solid background stays readable over any artwork (FR-010);
   no pointer events means clicks and hover pass through (FR-011); absolute
   positioning leaves layout alone (FR-009).
-- **Open**: which corner, decided once the card DOM is seen.
+- **Corner**: top right.
 
 ## 7. Tests without a build step
 
