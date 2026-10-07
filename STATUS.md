@@ -19,6 +19,11 @@
   response is tailored by `preferred_audio_language`), so don't use it.
 - `subtitle_locales` on the season is the complete list.
 
+## Requirements decided
+
+- Badge only when a series has an English audio version (`en-US`). No badge
+  otherwise, and no listing of other languages.
+
 ## Open decisions
 
 - What the card-grid endpoints (home, browse, search, watchlist) return per
