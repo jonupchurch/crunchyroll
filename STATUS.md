@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** speccing the first feature, English dub badge (2026-10-07).
+**Phase:** English dub badge specced and planned; tasks next (2026-10-07).
 
 ## What exists
 
@@ -11,6 +11,7 @@
 - Draft spec for the English dub badge at
   `specs/001-english-dub-badge/spec.md` (branch `001-english-dub-badge`).
   Passes its quality checklist; no open items.
+- Plan, research, data model, contracts, and quickstart alongside it.
 
 ## Confirmed on the live site (2026-10-07)
 
@@ -35,13 +36,17 @@
 
 ## Open decisions
 
-- Home, search, and watchlist item shapes are unconfirmed; assumed to match
-  browse until a capture says otherwise. Film listings likely use
-  `movie_listing_metadata` instead of `series_metadata` (unconfirmed).
+- Card DOM is unverified: need one card's HTML from the live browse page to
+  confirm the `/series/{id}` link assumption and pick the poster corner.
+- Home, search, and watchlist item shapes are unconfirmed. Watchlist loads
+  `/discover/{account}/watchlist` then `/cms/objects/{ids}`; one item from
+  each is needed. Film listings likely use `movie_listing_metadata`.
 - Whether anything besides the badge belongs in the initial feature set.
-- Whether to add a build step / test runner, or stay plain JS.
+
+## Decided
+
+- Stay plain JS with no build step; unit tests via `node --test`.
 
 ## Next action
 
-`speckit-plan`. It needs the card-grid
-endpoint answer above, which takes a console capture from the live site.
+`speckit-tasks`, then implement User Story 1 (browse) once the card HTML is in.

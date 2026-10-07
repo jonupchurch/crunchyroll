@@ -10,4 +10,5 @@ All notable changes to this project are documented here. Format follows
 - Manifest V3 extension skeleton with a fetch hook that captures Crunchyroll
   catalog API responses and forwards them to the content script.
 - ai-tools toolkit and Spec-Kit engine for planning.
-- Draft spec for the English dub badge (`specs/001-english-dub-badge/`).
+- Spec and implementation plan for the English dub badge
+  (`specs/001-english-dub-badge/`).
