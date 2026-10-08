@@ -3,7 +3,8 @@
 // window.postMessage; it has no access to extension APIs.
 (() => {
   const SOURCE = 'cr-enhancer';
-  const API_PATH = /\/content\/v2\//;
+  // Catalog data, plus the personalised rows on the home page.
+  const API_PATH = /\/(?:content|personalization)\/v2\//;
 
   const forward = (url, body) => {
     window.postMessage({ source: SOURCE, type: 'api-response', url, body }, location.origin);

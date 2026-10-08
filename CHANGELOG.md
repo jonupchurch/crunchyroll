@@ -18,6 +18,7 @@ All notable changes to this project are documented here. Format follows
   black `no-dub` label on subtitled-only series. `EN DUB` is green.
 - Spec for filtering browse cards by label (`specs/002-label-filter/`).
 - Smaller badge on narrow posters so it doesn't swamp the thumbnail.
+- Home page rows served by the personalization API now get labels.
 
 ### Changed
 

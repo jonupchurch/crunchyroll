@@ -52,8 +52,10 @@
 
 ## Open decisions
 
-- Home page: some cards stay unlabelled (the extension has no data for
-  them). User accepted this as good enough; cause not investigated.
+- Home page: some cards stayed unlabelled. Cause found for the "Top Picks"
+  row: it comes from `/personalization/v2/personalization`, which the hook
+  ignored. The hook now captures that path too; not yet seen working, and
+  other rows may have other sources.
 - The pill overlaps the site's orange top-right corner marker on some
   posters; move it or leave it? Unanswered.
 - Filter feature: specced at `specs/002-label-filter/spec.md` on branch
