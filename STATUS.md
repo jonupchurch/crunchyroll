@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** Badge feature working and checked on the live site; filter feature specced, waiting on browse grid markup (2026-10-07).
+**Phase:** Badges working and checked; label filter written, not yet run in a browser (2026-10-07).
 
 ## What exists
 
@@ -59,12 +59,12 @@
   other rows may have other sources.
 - The pill overlaps the site's orange top-right corner marker on some
   posters; move it or leave it? Unanswered.
-- Filter feature: specced at `specs/002-label-filter/spec.md` on branch
-  `002-label-filter` (cut from the badge branch). Not planned or built.
-  Known markup: the site's Filter control is
-  `li.dropdown-item > .erc-browse-filtering`; browse cards have a
-  `[data-t="hover-component"]` overlay with its own poster link. Still
-  unknown: the grid cell that has to be hidden.
+- Filter feature (`specs/002-label-filter/`, branch `002-label-filter`):
+  spec, plan, tasks, and code are in. Toggles go next to the site's Filter
+  control; cells are hidden by a CSS rule keyed on attributes the content
+  script sets. 9 unit tests for the filter state. None of the DOM side has
+  run in a browser. Unknown: what the site's infinite scroll does when the
+  filtered page is shorter than the window.
 - Neither branch is merged to `main` yet.
 
 ## Decided
@@ -73,6 +73,5 @@
 
 ## Next action
 
-Get the browse card's ancestor chain (which element is the grid cell), then
-`speckit-plan` for 002. Merge to `main` when the user says, or with the
-filter.
+Reload the extension and try the toggles on `/videos/popular`
+(002 tasks T008, T010, T011, T013). Then merge both branches to `main`.

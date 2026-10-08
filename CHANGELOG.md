@@ -16,7 +16,8 @@ All notable changes to this project are documented here. Format follows
   the card data the site already loads. Unit tests via `npm test`.
 - Red `no-en` tag on cards whose series is dubbed but not in English, and a
   black `no-dub` label on subtitled-only series. `EN DUB` is green.
-- Spec for filtering browse cards by label (`specs/002-label-filter/`).
+- Toggles on browse pages that hide or show cards by label, remembered
+  across pages and restarts (`specs/002-label-filter/`).
 - Smaller badge on narrow posters so it doesn't swamp the thumbnail.
 - Home page rows served by the personalization API now get labels.
 

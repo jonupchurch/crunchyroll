@@ -8,7 +8,11 @@ by dub availability:
 - red `no-en`: dubbed, but not in English
 - black `no-dub`: subtitled only
 
-A card with no label is one the extension has no data for yet. The label
+On browse pages, three toggles next to the site's own Filter control hide or
+show cards by label. The choice is remembered in the browser.
+
+A card with no label is one the extension has no data for yet; the toggles
+never hide those. The label
 describes the whole series, so it can differ from the site's own "Sub | Dub"
 text, which on some cards describes a single episode.
 
@@ -32,8 +36,9 @@ After changing code, hit **Reload** on the extension card and refresh the tab.
   making. The extension makes no requests of its own.
 - `src/audio-index.js` is the pure logic: it pulls each series' audio
   languages out of those responses and reads series ids out of card links.
+- `src/filter-state.js` is the pure logic for which labels are hidden.
 - `src/content.js` runs in the extension's isolated world, keeps an in-memory
-  index of series, and labels cards as they appear.
+  index of series, labels cards as they appear, and runs the filter toggles.
 - `src/content.css` styles whatever the extension injects.
 
 Plain JavaScript, no build step. Run the unit tests with `npm test`

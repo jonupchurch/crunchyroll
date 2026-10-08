@@ -38,3 +38,57 @@
   font-size: 9px;
   letter-spacing: 0;
 }
+
+/* Label filter: content.js lists the hidden labels on <html> and marks each
+   browse grid cell with its label. Hiding the cell lets the grid close up. */
+
+html[data-cr-enhancer-hide~='en'] .erc-browse-cards-collection > .browse-card[data-cr-enhancer-label='en'],
+html[data-cr-enhancer-hide~='no-en'] .erc-browse-cards-collection > .browse-card[data-cr-enhancer-label='no-en'],
+html[data-cr-enhancer-hide~='no-dub'] .erc-browse-cards-collection > .browse-card[data-cr-enhancer-label='no-dub'] {
+  display: none;
+}
+
+.cr-enhancer-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 16px;
+  list-style: none;
+}
+
+.cr-enhancer-filter button {
+  padding: 3px 8px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #000;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cr-enhancer-filter button[data-kind='en'] {
+  border-color: #1a7f37;
+  background: #1a7f37;
+}
+
+.cr-enhancer-filter button[data-kind='no-en'] {
+  border-color: #c8102e;
+  background: #c8102e;
+}
+
+.cr-enhancer-filter button[aria-pressed='false'] {
+  border-color: #555;
+  background: transparent;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.cr-enhancer-filter button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
