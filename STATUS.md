@@ -54,7 +54,8 @@
 
 - Home page: some cards stayed unlabelled. Cause found for the "Top Picks"
   row: it comes from `/personalization/v2/personalization`, which the hook
-  ignored. The hook now captures that path too; not yet seen working, and
+  ignored. The hook now captures that path too; user reports home is
+  better (2026-10-07), not confirmed complete, and
   other rows may have other sources.
 - The pill overlaps the site's orange top-right corner marker on some
   posters; move it or leave it? Unanswered.
