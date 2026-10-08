@@ -20,7 +20,7 @@
 - [x] T005 [US1] In `src/content.js`, insert a `li.cr-enhancer-filter` with one `<button>` per label at the front of the list holding `.erc-browse-filtering`; keep `aria-pressed` and `title` in step with the state; re-insert if the site drops it
 - [x] T006 [US1] In `src/content.js`, write the hidden labels to `data-cr-enhancer-hide` on `<html>` only while the toggles are in the page, and remove it otherwise
 - [x] T007 [US1] In `src/content.css`, hide cells whose label is listed on `<html>`, and style the toggles (on: label colour; off: outlined, dimmed, struck through; visible focus ring)
-- [ ] T008 [US1] On `/videos/popular`: toggle each label off and on; check the grid closes up, unlabelled cards stay, and the site's own Sort and Filter still work
+- [x] T008 [US1] On `/videos/popular`: toggle each label off and on; check the grid closes up, unlabelled cards stay, and the site's own Sort and Filter still work
 
 ## Phase 3: User Story 2 - The filter keeps applying (P2)
 
@@ -38,3 +38,9 @@
 ## Dependencies
 
 Phase 1 → US1 → US2 → Polish. Everything edits `src/content.js`, so tasks run in order. T008, T010, T011, and T013 need the live site.
+
+## Live-site results (2026-10-07)
+
+User reports the filtering works on the live site. Not separately confirmed:
+persistence across reloads and pages (T010), behaviour on a short filtered
+page (T011), and that other pages show no toggles (T013).

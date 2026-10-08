@@ -1,6 +1,6 @@
 # Status
 
-**Phase:** Badges working and checked; label filter written, not yet run in a browser (2026-10-07).
+**Phase:** Badges and the browse label filter both working on the live site and merged to `main` (2026-10-07).
 
 ## What exists
 
@@ -62,10 +62,10 @@
 - Filter feature (`specs/002-label-filter/`, branch `002-label-filter`):
   spec, plan, tasks, and code are in. Toggles go next to the site's Filter
   control; cells are hidden by a CSS rule keyed on attributes the content
-  script sets. 9 unit tests for the filter state. None of the DOM side has
-  run in a browser. Unknown: what the site's infinite scroll does when the
+  script sets. 9 unit tests for the filter state. User reports filtering
+  works (2026-10-07); persistence and non-browse pages not separately checked. Unknown: what the site's infinite scroll does when the
   filtered page is shorter than the window.
-- Neither branch is merged to `main` yet.
+- `main` is merged locally but not pushed to `origin`.
 
 ## Decided
 
@@ -73,5 +73,6 @@
 
 ## Next action
 
-Reload the extension and try the toggles on `/videos/popular`
-(002 tasks T008, T010, T011, T013). Then merge both branches to `main`.
+Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
+001 task T020. Open question: move the pill off the site's orange corner
+marker?
