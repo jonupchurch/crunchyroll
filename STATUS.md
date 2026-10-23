@@ -67,12 +67,17 @@
   filtered page is shorter than the window.
 - `main` is merged locally but not pushed to `origin`.
 
+- Watchlist export (`specs/003-watchlist-export/`, branch
+  `003-watchlist-export`): spec written 2026-10-23, no open markers.
+  Unverified whether captured watchlist data carries genres and progress.
+
 ## Decided
 
 - Stay plain JS with no build step; unit tests via `node --test`.
 
 ## Next action
 
-Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
+Plan 003 (watchlist export), starting by capturing a real watchlist
+response to see which columns are available. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
 001 task T020. Open question: move the pill off the site's orange corner
 marker?
