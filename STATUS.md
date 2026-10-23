@@ -68,8 +68,13 @@
 - `main` is merged locally but not pushed to `origin`.
 
 - Watchlist export (`specs/003-watchlist-export/`, branch
-  `003-watchlist-export`): spec written 2026-10-23, no open markers.
-  Unverified whether captured watchlist data carries genres and progress.
+  `003-watchlist-export`): built 2026-10-23 (`src/watchlist-export.js`,
+  11 unit tests; button and download in `content.js`). Not yet tried on
+  the live site. Genre fields (`tenant_categories`, `categories`) and
+  progress fields (`fully_watched`, `never_watched`, `playhead`) are
+  guesses at the response shape; blank columns mean the guess was wrong.
+  Captured watchlist entries aren't dropped when you remove a series
+  until the page reloads.
 
 ## Decided
 
@@ -77,7 +82,7 @@
 
 ## Next action
 
-Plan 003 (watchlist export), starting by capturing a real watchlist
-response to see which columns are available. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
+Try 003 on the live watchlist: reload the extension, click Export, check
+the file's rows, genres and progress against the page. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
 001 task T020. Open question: move the pill off the site's orange corner
 marker?

@@ -20,6 +20,9 @@ All notable changes to this project are documented here. Format follows
   across pages and restarts (`specs/002-label-filter/`).
 - Smaller badge on narrow posters so it doesn't swamp the thumbnail.
 - Home page rows served by the personalization API now get labels.
+- Export button on the watchlist that downloads it as Markdown (title,
+  genres, dub label, progress) with an instruction asking an LLM for
+  recommendations (`specs/003-watchlist-export/`).
 
 ### Changed
 
