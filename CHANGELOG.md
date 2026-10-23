@@ -23,7 +23,8 @@ All notable changes to this project are documented here. Format follows
 - Export button on the watchlist that downloads it as Markdown (title,
   genres, dub label, progress) with an instruction asking an LLM for
   recommendations (`specs/003-watchlist-export/`).
-- Star and maturity rating in the upper-left corner of series cards
+- Star and maturity rating, plus season and episode counts, in the
+  upper-left corner of series cards
   (`specs/004-rating-badge/`).
 
 ### Changed

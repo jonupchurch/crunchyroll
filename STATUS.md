@@ -80,10 +80,11 @@
   Captured watchlist entries aren't dropped when you remove a series
   until the page reloads.
 - Rating badge (`specs/004-rating-badge/`, branch `004-rating-badge`, built
-  on 003): star average and strictest maturity rating, upper left
-  (`src/ratings.js`, 9 unit tests). Not tried live. Field names
-  (`rating.average`, `series_metadata.maturity_ratings`) are guesses;
-  watchlist and home cards may lack the star rating.
+  on 003): star average and strictest maturity rating, with season and
+  episode counts on a second line, upper left (`src/ratings.js`, 11 unit
+  tests). Field names confirmed from a captured browse response; user
+  confirmed it working on the live site (2026-10-23). Watchlist and home
+  cards not separately checked; they may lack the star rating.
 
 ## Decided
 
@@ -91,6 +92,6 @@
 
 ## Next action
 
-Try 004 on a browse page and the watchlist. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
+Merge 003 and 004 into `main` when the user says. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
 001 task T020. Open question: move the pill off the site's orange corner
 marker?
