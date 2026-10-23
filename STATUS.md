@@ -74,8 +74,9 @@
   progress fields (`fully_watched`, `never_watched`, `playhead`) are
   guesses at the response shape; blank columns mean the guess was wrong.
   Tried live 2026-10-23: button shows, genres and progress fill in. Export
-  stopped at 100 series; the site seems to load the watchlist 100 at a
-  time, and whether scrolling loads the rest is being checked.
+  stopped at 100 series because the site loads the watchlist 100 at a
+  time; scrolling to the bottom loads the rest and the export then has
+  everything (confirmed 2026-10-23).
   Captured watchlist entries aren't dropped when you remove a series
   until the page reloads.
 - Rating badge (`specs/004-rating-badge/`, branch `004-rating-badge`, built
@@ -90,7 +91,6 @@
 
 ## Next action
 
-Try 004 on a browse page and the watchlist. Settle 003's 100-series
-limit. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
+Try 004 on a browse page and the watchlist. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
 001 task T020. Open question: move the pill off the site's orange corner
 marker?
