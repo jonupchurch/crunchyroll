@@ -1,12 +1,14 @@
 // Isolated-world content script: receives API responses from page-hook.js,
-// keeps track of each series' audio, and badges cards: English dub, dubbed
-// but not in English, or no dub at all. On browse pages it also adds toggles
+// keeps track of each series' audio and ratings, and badges cards: English
+// dub, dubbed but not in English, or no dub at all (upper right), and the
+// star and maturity rating (upper left). On browse pages it also adds toggles
 // that hide cards by label, and on the watchlist an Export button that saves
 // the list as Markdown for an LLM. Runs at document_start so no early
 // response is missed.
 (() => {
   const SOURCE = 'cr-enhancer';
   const BADGE_CLASS = 'cr-enhancer-dub-badge';
+  const RATING_CLASS = 'cr-enhancer-rating-badge';
   const POSITIONED_CLASS = 'cr-enhancer-positioned';
   const FILTER_CLASS = 'cr-enhancer-filter';
   const EXPORT_CLASS = 'cr-enhancer-export';
@@ -34,6 +36,8 @@
     collectWatchlistEntries,
     buildMarkdown,
     fileName,
+    collectRatings,
+    ratingBadge,
   } = globalThis.crEnhancer;
 
   const BADGES = {
@@ -46,6 +50,8 @@
   const audioBySeries = new Map();
   // Episode id -> series id, for cards that only link to an episode.
   const seriesByEpisode = new Map();
+  // Series id -> { stars, maturity }. Either can be null.
+  const ratingsBySeries = new Map();
   // Series id -> { title, genres }, for the export.
   const detailsBySeries = new Map();
   // Series id -> { progress }, in the order the watchlist listed them.
@@ -78,16 +84,26 @@
       });
     }
     for (const { id, seriesId } of episodes) seriesByEpisode.set(id, seriesId);
-    return series.length > 0 || episodes.length > 0;
+
+    const ratings = collectRatings(body);
+    for (const { id, stars, maturity } of ratings) {
+      // A response without a value never takes away one already known.
+      const known = ratingsBySeries.get(id);
+      ratingsBySeries.set(id, { stars: stars ?? known?.stars ?? null, maturity: maturity ?? known?.maturity ?? null });
+    }
+    return series.length > 0 || episodes.length > 0 || ratings.length > 0;
+  };
+
+  const seriesIdFor = (href) => {
+    const target = linkTargetFromHref(href);
+    if (!target) return null;
+    return target.kind === 'series' ? target.id : (seriesByEpisode.get(target.id) ?? null);
   };
 
   // Which badge a card linking to href should carry, or null if the series
   // isn't known yet.
   const badgeKindFor = (href) => {
-    const target = linkTargetFromHref(href);
-    if (!target) return null;
-    const seriesId = target.kind === 'series' ? target.id : seriesByEpisode.get(target.id);
-    const audio = audioBySeries.get(seriesId);
+    const audio = audioBySeries.get(seriesIdFor(href));
     if (!audio) return null;
     if (audio.hasEnglish) return 'en';
     return audio.hasDub ? 'no-en' : 'no-dub';
@@ -116,21 +132,37 @@
     return cards;
   };
 
-  const addBadge = (host, kind) => {
-    const badge = document.createElement('span');
-    badge.className = BADGE_CLASS;
-    badge.dataset.kind = kind;
-    badge.textContent = BADGES[kind].text;
-    badge.setAttribute('aria-label', BADGES[kind].label);
+  const placeBadge = (host, badge) => {
     // Only give the host a positioning context if the site hasn't already.
     if (getComputedStyle(host).position === 'static') host.classList.add(POSITIONED_CLASS);
     if (host.offsetWidth < COMPACT_BELOW_PX) badge.dataset.size = 'compact';
     host.append(badge);
   };
 
+  const addBadge = (host, kind) => {
+    const badge = document.createElement('span');
+    badge.className = BADGE_CLASS;
+    badge.dataset.kind = kind;
+    badge.textContent = BADGES[kind].text;
+    badge.setAttribute('aria-label', BADGES[kind].label);
+    placeBadge(host, badge);
+  };
+
+  const addRatingBadge = (host, { text, label }) => {
+    const badge = document.createElement('span');
+    badge.className = RATING_CLASS;
+    badge.textContent = text;
+    badge.setAttribute('aria-label', label);
+    placeBadge(host, badge);
+  };
+
   const removeBadge = (badge) => {
-    badge.parentElement?.classList.remove(POSITIONED_CLASS);
+    const host = badge.parentElement;
     badge.remove();
+    // The host keeps its positioning while the other badge is still on it.
+    if (host && !host.querySelector(`:scope > .${BADGE_CLASS}, :scope > .${RATING_CLASS}`)) {
+      host.classList.remove(POSITIONED_CLASS);
+    }
   };
 
   // Records each browse grid cell's label so the stylesheet can hide by it.
@@ -151,8 +183,9 @@
   };
 
   const badgeCards = () => {
+    const cards = findCards();
     const wanted = new Map();
-    for (const { host, href } of findCards()) {
+    for (const { host, href } of cards) {
       const kind = badgeKindFor(href);
       if (kind) wanted.set(host, kind);
     }
@@ -167,6 +200,25 @@
     }
 
     for (const [host, kind] of wanted) addBadge(host, kind);
+
+    badgeRatings(cards);
+  };
+
+  const badgeRatings = (cards) => {
+    const wanted = new Map();
+    for (const { host, href } of cards) {
+      const badge = ratingBadge(ratingsBySeries.get(seriesIdFor(href)));
+      if (badge) wanted.set(host, badge);
+    }
+
+    // Same recycling as the dub badge: keep a badge only if it still says
+    // the right thing for the card it's on.
+    for (const badge of document.querySelectorAll(`.${RATING_CLASS}`)) {
+      if (wanted.get(badge.parentElement)?.text === badge.textContent) wanted.delete(badge.parentElement);
+      else removeBadge(badge);
+    }
+
+    for (const [host, badge] of wanted) addRatingBadge(host, badge);
   };
 
   const saveHiddenLabels = () => {

@@ -13,7 +13,7 @@
     },
     {
       "matches": ["https://www.crunchyroll.com/*"],
-      "js": ["src/audio-index.js", "src/filter-state.js", "src/watchlist-export.js", "src/content.js"],
+      "js": ["src/audio-index.js", "src/filter-state.js", "src/watchlist-export.js", "src/ratings.js", "src/content.js"],
       "css": ["src/content.css"],
       "run_at": "document_start"
     }

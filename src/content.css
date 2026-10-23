@@ -39,6 +39,32 @@
   letter-spacing: 0;
 }
 
+/* Star and maturity rating, opposite the dub badge. */
+
+.cr-enhancer-rating-badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.cr-enhancer-rating-badge[data-size='compact'] {
+  top: 3px;
+  left: 3px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 9px;
+}
+
 /* Label filter: content.js lists the hidden labels on <html> and marks each
    browse grid cell with its label. Hiding the cell lets the grid close up. */
 
