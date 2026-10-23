@@ -1,7 +1,7 @@
-// Pure logic for the rating badge: pulling each series' average star rating
-// and maturity rating out of captured responses, and the text the badge
-// shows. No DOM and no extension APIs, so it runs as a content script and
-// under Node for tests.
+// Pure logic for the rating badge: pulling each series' average star rating,
+// maturity rating, and season and episode counts out of captured responses,
+// and the text the badge shows. No DOM and no extension APIs, so it runs as a
+// content script and under Node for tests.
 (() => {
   const MAX_DEPTH = 16;
   // US TV ratings, mildest first. Other schemes are ranked by their number.
@@ -26,6 +26,9 @@
     return Number.isFinite(number) ? number : -1;
   };
 
+  const countOf = (value) => (Number.isInteger(value) && value > 0 ? value : null);
+  const plural = (count, word) => `${count} ${word}${count === 1 ? '' : 's'}`;
+
   const strictest = (labels) => {
     const valid = Array.isArray(labels) ? labels.filter(isText).map((label) => label.trim()) : [];
     if (valid.length === 0) return null;
@@ -47,7 +50,11 @@
       if (isId(node.id) && isObject(metadata)) {
         const stars = starsOf(node.rating);
         const maturity = strictest(metadata.maturity_ratings);
-        if (stars !== null || maturity !== null) ratings.push({ id: node.id, stars, maturity });
+        const seasons = countOf(metadata.season_count);
+        const episodes = countOf(metadata.episode_count);
+        if ([stars, maturity, seasons, episodes].some((value) => value !== null)) {
+          ratings.push({ id: node.id, stars, maturity, seasons, episodes });
+        }
       }
 
       for (const value of Object.values(node)) visit(value, depth + 1);
@@ -57,13 +64,26 @@
     return ratings;
   };
 
-  // { text, label } for the badge, or null when there's nothing to show.
-  const ratingBadge = ({ stars = null, maturity = null } = {}) => {
+  // { rating, size, label } for the badge, or null when there's nothing to
+  // show. rating and size are the badge's two lines; either can be empty.
+  const ratingBadge = ({ stars = null, maturity = null, seasons = null, episodes = null } = {}) => {
     const starText = stars === null ? null : stars.toFixed(1);
-    if (starText === null && maturity === null) return null;
+    const seasonText = seasons === null ? null : plural(seasons, 'season');
+    const episodeText = episodes === null ? null : plural(episodes, 'ep');
+    const rating = [starText && `★${starText}`, maturity].filter(Boolean).join(' · ');
+    const size = [seasonText, episodeText].filter(Boolean).join(' · ');
+    if (rating === '' && size === '') return null;
     return {
-      text: [starText && `★${starText}`, maturity].filter(Boolean).join(' · '),
-      label: [starText && `Rated ${starText} out of 5`, maturity].filter(Boolean).join(', '),
+      rating,
+      size,
+      label: [
+        starText && `Rated ${starText} out of 5`,
+        maturity,
+        seasonText,
+        episodes === null ? null : plural(episodes, 'episode'),
+      ]
+        .filter(Boolean)
+        .join(', '),
     };
   };
 

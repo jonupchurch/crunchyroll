@@ -1,7 +1,7 @@
 // Isolated-world content script: receives API responses from page-hook.js,
 // keeps track of each series' audio and ratings, and badges cards: English
 // dub, dubbed but not in English, or no dub at all (upper right), and the
-// star and maturity rating (upper left). On browse pages it also adds toggles
+// star and maturity rating with season and episode counts (upper left). On browse pages it also adds toggles
 // that hide cards by label, and on the watchlist an Export button that saves
 // the list as Markdown for an LLM. Runs at document_start so no early
 // response is missed.
@@ -50,7 +50,7 @@
   const audioBySeries = new Map();
   // Episode id -> series id, for cards that only link to an episode.
   const seriesByEpisode = new Map();
-  // Series id -> { stars, maturity }. Either can be null.
+  // Series id -> { stars, maturity, seasons, episodes }. Any can be null.
   const ratingsBySeries = new Map();
   // Series id -> { title, genres }, for the export.
   const detailsBySeries = new Map();
@@ -86,10 +86,12 @@
     for (const { id, seriesId } of episodes) seriesByEpisode.set(id, seriesId);
 
     const ratings = collectRatings(body);
-    for (const { id, stars, maturity } of ratings) {
+    for (const { id, ...values } of ratings) {
       // A response without a value never takes away one already known.
-      const known = ratingsBySeries.get(id);
-      ratingsBySeries.set(id, { stars: stars ?? known?.stars ?? null, maturity: maturity ?? known?.maturity ?? null });
+      const known = ratingsBySeries.get(id) ?? {};
+      const merged = {};
+      for (const [key, value] of Object.entries(values)) merged[key] = value ?? known[key] ?? null;
+      ratingsBySeries.set(id, merged);
     }
     return series.length > 0 || episodes.length > 0 || ratings.length > 0;
   };
@@ -148,10 +150,16 @@
     placeBadge(host, badge);
   };
 
-  const addRatingBadge = (host, { text, label }) => {
+  const addRatingBadge = (host, { rating, size, label }) => {
     const badge = document.createElement('span');
     badge.className = RATING_CLASS;
-    badge.textContent = text;
+    for (const line of [rating, size]) {
+      if (!line) continue;
+      const row = document.createElement('span');
+      row.textContent = line;
+      badge.append(row);
+    }
+    badge.dataset.label = label;
     badge.setAttribute('aria-label', label);
     placeBadge(host, badge);
   };
@@ -214,7 +222,7 @@
     // Same recycling as the dub badge: keep a badge only if it still says
     // the right thing for the card it's on.
     for (const badge of document.querySelectorAll(`.${RATING_CLASS}`)) {
-      if (wanted.get(badge.parentElement)?.text === badge.textContent) wanted.delete(badge.parentElement);
+      if (wanted.get(badge.parentElement)?.label === badge.dataset.label) wanted.delete(badge.parentElement);
       else removeBadge(badge);
     }
 

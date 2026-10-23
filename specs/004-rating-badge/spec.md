@@ -13,6 +13,8 @@
 ### Session 2026-10-23
 
 - Q: Which rating? → A: Both: the average star rating from Crunchyroll users and the maturity rating (TV-14, TV-MA, …). Offered with star-only and maturity-only as alternatives.
+- Q: Season and episode counts too? → A: Yes (user request). Shown as a second line of the same badge (`2 seasons · 38 eps`) so the first line stays short enough to clear the dub label.
+- Field names confirmed from a captured browse response: `rating.average` (string), `series_metadata.maturity_ratings`, `series_metadata.season_count`, `series_metadata.episode_count`.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -68,7 +70,8 @@ each series' own page.
 
 - **FR-001**: Series cards MUST show the series' average star rating, to one decimal place, in the poster's upper-left corner when it is known.
 - **FR-002**: Cards MUST show the series' maturity rating in the same corner when it is known; when a series lists several, the strictest one is shown.
-- **FR-003**: When neither rating is known, nothing MUST be shown in that corner.
+- **FR-002a**: Cards MUST show the series' season and episode counts on a second line of the same badge when known.
+- **FR-003**: When none of these values is known, nothing MUST be shown in that corner.
 - **FR-004**: The rating MUST always match the series the card currently shows, including after the site reuses cards while scrolling.
 - **FR-005**: The rating MUST NOT cover the dub label, and the dub label and filter MUST keep working exactly as before.
 - **FR-006**: The rating MUST be readable by assistive technology (e.g. "Rated 4.8 out of 5, TV-14").

@@ -39,7 +39,8 @@
   letter-spacing: 0;
 }
 
-/* Star and maturity rating, opposite the dub badge. */
+/* Star and maturity rating, with season and episode counts on a second
+   line, opposite the dub badge. */
 
 .cr-enhancer-rating-badge {
   position: absolute;
@@ -55,6 +56,14 @@
   line-height: 1.4;
   white-space: nowrap;
   pointer-events: none;
+}
+
+.cr-enhancer-rating-badge > span {
+  display: block;
+}
+
+.cr-enhancer-rating-badge > span + span {
+  font-weight: 400;
 }
 
 .cr-enhancer-rating-badge[data-size='compact'] {
