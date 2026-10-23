@@ -65,7 +65,7 @@
   script sets. 9 unit tests for the filter state. User reports filtering
   works (2026-10-07); persistence and non-browse pages not separately checked. Unknown: what the site's infinite scroll does when the
   filtered page is shorter than the window.
-- `main` is merged locally but not pushed to `origin`.
+- `main` includes 001–004 and is pushed to `origin` (2026-10-23).
 
 - Watchlist export (`specs/003-watchlist-export/`, branch
   `003-watchlist-export`): built 2026-10-23 (`src/watchlist-export.js`,
@@ -92,6 +92,6 @@
 
 ## Next action
 
-Merge 003 and 004 into `main` when the user says. Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
+Push `main` when the user says. Leftover checks: 002 tasks T010, T011, T013;
 001 task T020. Open question: move the pill off the site's orange corner
 marker?
